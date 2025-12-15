@@ -30,6 +30,7 @@ export default defineConfig({
 						configDir: path.join(dirname, ".storybook"),
 					}),
 				],
+				base: "/SimpleGraphCreator/",
 				test: {
 					name: "storybook",
 					browser: {
@@ -47,5 +48,4 @@ export default defineConfig({
 			},
 		],
 	},
-	base: "/SimpleGraphCreator/",
 });
