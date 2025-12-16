@@ -56,11 +56,10 @@ export default function DataRow({
 				cursor: "move",
 			}}
 		>
-			<TableCell
-				padding="checkbox"
-				sx={{ cursor: "grab" }}
-			>
+			<TableCell sx={{ cursor: "grab" }}>
 				<DragIndicatorIcon sx={{ color: "action.active", verticalAlign: "middle", mr: 1 }} />
+			</TableCell>
+			<TableCell padding="checkbox">
 				<Checkbox
 					color="primary"
 					checked={isSelected}

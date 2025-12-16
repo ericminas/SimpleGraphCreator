@@ -10,12 +10,17 @@ export default function DataPanel(): JSX.Element {
 				flexDirection: "column",
 				width: "100%",
 				height: "100%",
-				paddingLeft: "0.25rem",
 			}}
 		>
 			<Typography
 				component="h1"
-				sx={{ marginBottom: "1rem", height: "10%" }}
+				sx={{
+					marginBottom: "1rem",
+					minHeight: "1rem",
+					textAlign: "center",
+					borderBottom: "1px solid grey",
+					boxShadow:"0 3px 3px #003366"
+				}}
 			>
 				Data Entry
 			</Typography>

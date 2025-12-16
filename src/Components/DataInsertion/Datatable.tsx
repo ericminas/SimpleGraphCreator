@@ -21,7 +21,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { useColumns } from "../Context/ColumnProvider";
 import DataRow from "./DataRow";
 
-const additionalColumns = 2;
+const additionalColumns = 3;
 
 interface ExtendedHeaderProps {
 	selected: string[];
@@ -137,6 +137,7 @@ export default function DataTable(): JSX.Element {
 				>
 					<TableHead>
 						<TableRow>
+							<TableCell padding="normal" />
 							<TableCell padding="checkbox">
 								<Checkbox
 									color="primary"
