@@ -10,7 +10,7 @@ import fs from "node:fs";
 const dirname =
 	typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	plugins: [
 		react({
 			babel: {
@@ -25,7 +25,7 @@ export default defineConfig({
 			},
 		},
 	],
-	base: "/SimpleGraphCreator/",
+	base: mode === "development" ? "/" : "/SimpleGraphCreator/",
 	test: {
 		projects: [
 			{
@@ -52,4 +52,4 @@ export default defineConfig({
 			},
 		],
 	},
-});
+}));
