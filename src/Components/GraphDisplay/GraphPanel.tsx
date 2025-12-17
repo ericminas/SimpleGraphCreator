@@ -25,12 +25,12 @@ export default function GraphPanel(): JSX.Element {
 			>
 				Graph visualization
 			</Typography>
-			<Box >
-				<GraphSettings />
-			</Box>
-			<Box sx={{  display: "flex", flex: 1 }}>
-				<GraphArea />
-			</Box>
+			{/* <Box > */}
+			<GraphSettings />
+			{/* </Box> */}
+			{/* <Box sx={{  display: "flex", flex: 1 }}> */}
+			<GraphArea />
+			{/* </Box> */}
 			<Box sx={{ height: "10%" }}>Button row</Box>
 		</Box>
 	);

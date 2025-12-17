@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type JSX, type ReactNode } from "react";
 
-export const GRAPH_STYLES = ["pie", "line", "bar"] as const;
+export const GRAPH_STYLES = ["line", "pie", "bar"] as const;
 export type GraphStyle = (typeof GRAPH_STYLES)[number];
 
 export interface GraphContextDataType {
@@ -23,8 +23,8 @@ export { GraphContext };
 
 export default function GraphContextProvider({ children }: { children: ReactNode }): JSX.Element {
 	const [settings, setSettings] = useState<GraphContextDataType>({
-		style: "pie",
-		title: "add title",
+		style: "line",
+		title: "",
 		xAxisTitle: "",
 		yAxisTitle: "",
 	});
@@ -44,13 +44,19 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 	const getOptions = () => {
 		return {
 			responsive: true,
+
 			plugins: {
-				title: { text: settings.title, display: true },
+				title: { text: settings.title, display: settings.title.length > 0 },
+				legend: { display: settings.style === "pie" },
 			},
 			scales: {
 				y: { title: { text: settings.xAxisTitle, display: settings.xAxisTitle.length > 0 } },
 				x: {
-					title: { test: settings.xAxisTitle, display: settings.yAxisTitle.length > 0 },
+					title: {
+						test: settings.xAxisTitle,
+						display: settings.yAxisTitle.length > 0,
+						align: "center",
+					},
 				},
 			},
 		};

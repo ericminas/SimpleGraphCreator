@@ -40,7 +40,10 @@ export default function GraphSettings(): JSX.Element {
 						padding: "0.25rem",
 					}}
 				>
-					<Box sx={{ display: "flex" }}>
+					<Box
+						sx={{ display: "flex" }}
+						gap={2}
+					>
 						<SettingsIcon sx={{ color: "#003366" }} />
 						<Typography
 							component={"h6"}
@@ -49,56 +52,13 @@ export default function GraphSettings(): JSX.Element {
 							Graph Settings
 						</Typography>
 					</Box>
-					<Box onClick={() => setCollapsed(!collapsed)}>
+					<Box
+						onClick={() => setCollapsed(!collapsed)}
+						sx={{ cursor: "pointer" }}
+					>
 						{collapsed ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 					</Box>
 				</Box>
-				{/* {!collapsed && (
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "row",
-
-							"> *": {
-								marginX: "0.5rem",
-							},
-						}}
-					>
-						<Box>
-							<InputLabel>Graph Style</InputLabel>
-							<Select
-								value={settings.style}
-								onChange={(e) => setStyle(e.target.value)}
-								sx={{ minWidth: "6.25rem" }}
-							>
-								{GRAPH_STYLES.map((style) => (
-									<MenuItem value={style}>{style}</MenuItem>
-								))}
-							</Select>
-						</Box>
-						<Box>
-							<InputLabel>Graph Title</InputLabel>
-							<OutlinedInput
-								value={settings.title}
-								onChange={(e) => setTitle(e.target.value)}
-							/>
-						</Box>
-						<Box>
-							<InputLabel>X-Axis Title</InputLabel>
-							<OutlinedInput
-								value={settings.xAxisTitle}
-								onChange={(e) => setAxisTitle("x",e.target.value)}
-							/>
-						</Box>
-						<Box>
-							<InputLabel>Y-Axis Title</InputLabel>
-							<OutlinedInput
-								value={settings.yAxisTitle}
-								onChange={(e) => setAxisTitle("y",e.target.value)}
-							/>
-						</Box>
-					</Box>
-				)} */}
 				{!collapsed && (
 					<Box sx={{ paddingX: "0.5rem" }}>
 						<Grid
@@ -143,6 +103,7 @@ export default function GraphSettings(): JSX.Element {
 									sx={{ width: "100%" }}
 								/>
 							</Grid>
+							{/* // TODO checkboxes where you can select up to 8 colors out  */}
 						</Grid>
 					</Box>
 				)}
