@@ -48,10 +48,10 @@ export default function ColumnProvider({ children }: { children: ReactNode }): J
 	);
 }
 
-export function useColumns(): ColumnContextType {
+export function useColumnsData(): ColumnContextType {
 	const context = useContext(ColumnContext);
 	if (!context) {
-		throw new Error("useData must be used within a DataProvider");
+		throw new Error("useColumnsData must be used within a DataProvider");
 	}
 	return context;
 }

@@ -1,5 +1,6 @@
-import { Box, Divider, Typography } from "@mui/material";
-import DataPanel from "./Components/DataPane";
+import { Box, Divider } from "@mui/material";
+import DataPanel from "./Components/DataInsertion/DataPanel";
+import GraphPanel from "./Components/GraphDisplay/GraphPanel";
 
 export default function App() {
 	return (
@@ -27,7 +28,7 @@ export default function App() {
 				sx={{ width: "2px", borderColor: "black" }}
 			/>
 			<Box sx={{ height: "100%", width: "49%", display: "flex", padding: "0.25rem" }}>
-				<Typography component="h1">Graph visualization</Typography>
+				<GraphPanel />
 			</Box>
 		</Box>
 	);

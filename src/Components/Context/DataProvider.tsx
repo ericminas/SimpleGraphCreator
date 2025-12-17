@@ -25,28 +25,28 @@ export { DataContext };
 export default function DataProvider({ children }: { children: ReactNode }): JSX.Element {
 	const [data, setData] = useState<GraphDataPoint[]>([
 		{
-			label: "row 1",
-			value: "row 1",
+			label: "Category 1",
+			value: "33",
 			id: uuidv4(),
 		},
 		{
-			label: "row 2",
-			value: "row 2",
+			label: "Category 2",
+			value: "25",
 			id: uuidv4(),
 		},
 		{
-			label: "row 3",
-			value: "row 3",
+			label: "Category 3",
+			value: "13",
 			id: uuidv4(),
 		},
 		{
-			label: "row 4",
-			value: "row 4",
+			label: "Category 4",
+			value: "17",
 			id: uuidv4(),
 		},
 		{
-			label: "row 5",
-			value: "row 5",
+			label: "Category 5",
+			value: "7",
 			id: uuidv4(),
 		},
 	]);
@@ -84,10 +84,10 @@ export default function DataProvider({ children }: { children: ReactNode }): JSX
 	);
 }
 
-export function useData(): DataContextType {
+export function useRowsData(): DataContextType {
 	const context = useContext(DataContext);
 	if (!context) {
-		throw new Error("useData must be used within a DataProvider");
+		throw new Error("useRowsData must be used within a DataProvider");
 	}
 	return context;
 }

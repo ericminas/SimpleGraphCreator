@@ -14,11 +14,11 @@ import {
 	OutlinedInput,
 } from "@mui/material";
 import { useState, useRef, type JSX } from "react";
-import { useData } from "../Context/DataProvider";
+import { useRowsData } from "../Context/DataProvider";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { useColumns } from "../Context/ColumnProvider";
+import { useColumnsData } from "../Context/ColumnProvider";
 import DataRow from "./DataRow";
 
 const additionalColumns = 3;
@@ -29,7 +29,7 @@ interface ExtendedHeaderProps {
 }
 
 function ExtendedHeader({ selected, setSelected }: ExtendedHeaderProps): JSX.Element {
-	const { data, addData, removeData } = useData();
+	const { data, addData, removeData } = useRowsData();
 	const handleDeleteSelected = () => {
 		selected.forEach((id) => removeData(id));
 		setSelected([]);
@@ -78,8 +78,8 @@ function ExtendedHeader({ selected, setSelected }: ExtendedHeaderProps): JSX.Ele
 }
 
 export default function DataTable(): JSX.Element {
-	const { data, addEmptyRow, editData, reorderData } = useData();
-	const { columns, addEmptyColumn, editColumn } = useColumns();
+	const { data, addEmptyRow, editData, reorderData } = useRowsData();
+	const { columns, addEmptyColumn, editColumn } = useColumnsData();
 
 	const [selected, setSelected] = useState<string[]>([]);
 	const dragItem = useRef<number | null>(null);

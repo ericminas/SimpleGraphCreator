@@ -1,6 +1,6 @@
-import { Box, ButtonGroup, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type { JSX } from "react";
-import DataTable from "./DataInsertion/Datatable";
+import DataTable from "./Datatable";
 
 export default function DataPanel(): JSX.Element {
 	return (
@@ -19,7 +19,7 @@ export default function DataPanel(): JSX.Element {
 					minHeight: "1rem",
 					textAlign: "center",
 					borderBottom: "1px solid grey",
-					boxShadow:"0 3px 3px #003366"
+					boxShadow: "0 3px 3px #003366",
 				}}
 			>
 				Data Entry
