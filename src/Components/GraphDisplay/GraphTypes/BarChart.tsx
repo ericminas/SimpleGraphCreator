@@ -1,7 +1,15 @@
 import { useEffect, useState, type JSX } from "react";
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import {
+	Chart as ChartJS,
+	Tooltip,
+	Legend,
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	Title,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 import { useRowsData, type GraphDataPoint } from "../../Context/DataProvider";
 import { getChartColors } from "./DefaultColors";
 import type { AssertionNotification } from "./NotificationList";
@@ -9,7 +17,7 @@ import { useColumnsData, type ColumnDefinition } from "../../Context/ColumnProvi
 import NotificationList from "./NotificationList";
 import { useGraphContext } from "../../Context/GraphContextProvider";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function checkAssertions(
 	rowData: GraphDataPoint[],
@@ -27,16 +35,6 @@ function checkAssertions(
 		});
 	}
 
-	// ERR: the values must add up to 100
-	const sum = values.reduce((acc, cur) => (acc += cur));
-	if (100 - sum !== 0) {
-		notifications.push({
-			type: "error",
-			title: "Incorrect Sum",
-			content: `All values must add up to 100. The actual sum is ${sum}`,
-		});
-	}
-
 	// WARN: at most 2 cols
 	if (columns.length > 2) {
 		notifications.push({
@@ -49,7 +47,7 @@ function checkAssertions(
 	return notifications;
 }
 
-export default function DonutChart(): JSX.Element {
+export default function BarChart(): JSX.Element {
 	const { data: rowData } = useRowsData();
 	const { columns } = useColumnsData();
 	const { getOptions } = useGraphContext();
@@ -81,7 +79,7 @@ export default function DonutChart(): JSX.Element {
 	};
 
 	return (
-		<Pie
+		<Bar
 			data={graphData}
 			//@ts-ignore
 			options={getOptions()}

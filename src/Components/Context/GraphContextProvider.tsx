@@ -6,12 +6,16 @@ export type GraphStyle = (typeof GRAPH_STYLES)[number];
 export interface GraphContextDataType {
 	style: GraphStyle;
 	title: string;
+	xAxisTitle: string;
+	yAxisTitle: string;
 }
 
 export interface GraphContextType {
 	settings: GraphContextDataType;
 	setStyle: (v: GraphStyle) => void;
 	setTitle: (v: string) => void;
+	setAxisTitle: (axis: "x" | "y", v: string) => void;
+	getOptions: () => unknown; // TODO this should have the type of the option object for the chart package
 }
 
 const GraphContext = createContext<GraphContextType | undefined>(undefined);
@@ -21,6 +25,8 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 	const [settings, setSettings] = useState<GraphContextDataType>({
 		style: "pie",
 		title: "add title",
+		xAxisTitle: "",
+		yAxisTitle: "",
 	});
 
 	const setStyle = (v: GraphStyle) => {
@@ -31,8 +37,27 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 		setSettings((prev) => ({ ...prev, title: v }));
 	};
 
+	const setAxisTitle = (axis: string, v: string) => {
+		setSettings((prev) => ({ ...prev, [axis === "x" ? "xAxisTitle" : "yAxisTitle"]: v }));
+	};
+
+	const getOptions = () => {
+		return {
+			responsive: true,
+			plugins: {
+				title: { text: settings.title, display: true },
+			},
+			scales: {
+				y: { title: { text: settings.xAxisTitle, display: settings.xAxisTitle.length > 0 } },
+				x: {
+					title: { test: settings.xAxisTitle, display: settings.yAxisTitle.length > 0 },
+				},
+			},
+		};
+	};
+
 	return (
-		<GraphContext.Provider value={{ settings, setStyle, setTitle }}>
+		<GraphContext.Provider value={{ settings, setStyle, setTitle, setAxisTitle, getOptions }}>
 			{children}
 		</GraphContext.Provider>
 	);

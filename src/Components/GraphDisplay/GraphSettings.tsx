@@ -1,4 +1,13 @@
-import { Box, InputLabel, MenuItem, OutlinedInput, Paper, Select, Typography } from "@mui/material";
+import {
+	Box,
+	Grid,
+	InputLabel,
+	MenuItem,
+	OutlinedInput,
+	Paper,
+	Select,
+	Typography,
+} from "@mui/material";
 import { useState, type JSX } from "react";
 import { GRAPH_STYLES, useGraphContext } from "../Context/GraphContextProvider";
 import {
@@ -8,7 +17,7 @@ import {
 } from "@mui/icons-material";
 
 export default function GraphSettings(): JSX.Element {
-	const { settings, setStyle, setTitle } = useGraphContext();
+	const { settings, setStyle, setTitle, setAxisTitle } = useGraphContext();
 	const [collapsed, setCollapsed] = useState<boolean>(false);
 
 	return (
@@ -44,7 +53,7 @@ export default function GraphSettings(): JSX.Element {
 						{collapsed ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 					</Box>
 				</Box>
-				{!collapsed && (
+				{/* {!collapsed && (
 					<Box
 						sx={{
 							display: "flex",
@@ -74,6 +83,67 @@ export default function GraphSettings(): JSX.Element {
 								onChange={(e) => setTitle(e.target.value)}
 							/>
 						</Box>
+						<Box>
+							<InputLabel>X-Axis Title</InputLabel>
+							<OutlinedInput
+								value={settings.xAxisTitle}
+								onChange={(e) => setAxisTitle("x",e.target.value)}
+							/>
+						</Box>
+						<Box>
+							<InputLabel>Y-Axis Title</InputLabel>
+							<OutlinedInput
+								value={settings.yAxisTitle}
+								onChange={(e) => setAxisTitle("y",e.target.value)}
+							/>
+						</Box>
+					</Box>
+				)} */}
+				{!collapsed && (
+					<Box sx={{ paddingX: "0.5rem" }}>
+						<Grid
+							container
+							columns={4}
+							rowSpacing={2}
+							columnSpacing={2}
+						>
+							<Grid size={1}>
+								<InputLabel>Graph Style</InputLabel>
+								<Select
+									value={settings.style}
+									onChange={(e) => setStyle(e.target.value)}
+									sx={{ width: "100%" }}
+								>
+									{GRAPH_STYLES.map((style) => (
+										<MenuItem value={style}>{style}</MenuItem>
+									))}
+								</Select>
+							</Grid>
+							<Grid size={3}>
+								<InputLabel>Graph Title</InputLabel>
+								<OutlinedInput
+									value={settings.title}
+									onChange={(e) => setTitle(e.target.value)}
+									sx={{ width: "100%" }}
+								/>
+							</Grid>
+							<Grid size={2}>
+								<InputLabel>X-Axis Title</InputLabel>
+								<OutlinedInput
+									value={settings.xAxisTitle}
+									onChange={(e) => setAxisTitle("x", e.target.value)}
+									sx={{ width: "100%" }}
+								/>
+							</Grid>
+							<Grid size={2}>
+								<InputLabel>Y-Axis Title</InputLabel>
+								<OutlinedInput
+									value={settings.yAxisTitle}
+									onChange={(e) => setAxisTitle("y", e.target.value)}
+									sx={{ width: "100%" }}
+								/>
+							</Grid>
+						</Grid>
 					</Box>
 				)}
 			</Paper>
