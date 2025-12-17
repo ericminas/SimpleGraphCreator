@@ -1,9 +1,36 @@
-import { Box, Typography } from "@mui/material";
-import type { JSX } from "react";
-import GraphArea from "./GraphArea";
+import { Box, Paper, Typography } from "@mui/material";
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
+import { useEffect, useRef, useState, type JSX, type ReactNode } from "react";
 import GraphSettings from "./GraphSettings";
+import { useGraphContext } from "../Context/GraphContextProvider";
+import DonutChart from "./GraphTypes/PieChart";
+import BarChart from "./GraphTypes/BarChart";
+import LineChart from "./GraphTypes/LineChart";
+import DownloadButton from "./DownloadButton";
 
 export default function GraphPanel(): JSX.Element {
+	const { settings } = useGraphContext();
+	const [selectedGraphComponent, setSelectedGraphComponent] = useState<ReactNode>(null);
+
+	const chartContainerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		switch (settings.style) {
+			case "pie":
+				setSelectedGraphComponent(<DonutChart />);
+				break;
+			case "bar":
+				setSelectedGraphComponent(<BarChart />);
+				break;
+			case "line":
+				setSelectedGraphComponent(<LineChart />);
+				break;
+			default:
+				setSelectedGraphComponent(<></>);
+			// NOOP
+		}
+	}, [settings.style]);
+
 	return (
 		<Box
 			sx={{
@@ -13,25 +40,37 @@ export default function GraphPanel(): JSX.Element {
 				height: "100%",
 			}}
 		>
-			<Typography
-				component="h1"
+			<GraphSettings />
+			<Paper
+				variant="outlined"
 				sx={{
-					marginBottom: "1rem",
-					minHeight: "1rem",
-					textAlign: "center",
-					borderBottom: "1px solid grey",
-					boxShadow: "0 3px 3px #003366",
+					width: "100%",
+					marginY: "0.5rem",
 				}}
 			>
-				Graph visualization
-			</Typography>
-			{/* <Box > */}
-			<GraphSettings />
-			{/* </Box> */}
-			{/* <Box sx={{  display: "flex", flex: 1 }}> */}
-			<GraphArea />
-			{/* </Box> */}
-			<Box sx={{ height: "10%" }}>Button row</Box>
+				<Box
+					sx={{
+						padding: "0.5rem",
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "flex-start",
+					}}
+					gap={2}
+				>
+					<AutoGraphIcon sx={{ color: "#003366" }} />
+					<Typography
+						component={"h6"}
+						sx={{ fontWeight: "bold" }}
+					>
+						Generated Graph
+					</Typography>
+				</Box>
+
+				<div ref={chartContainerRef}>{selectedGraphComponent}</div>
+			</Paper>
+			<Box>
+				<DownloadButton chartReference={chartContainerRef} />
+			</Box>
 		</Box>
 	);
 }

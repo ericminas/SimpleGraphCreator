@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
+import TableChartIcon from "@mui/icons-material/TableChart";
 import type { JSX } from "react";
 import DataTable from "./Datatable";
 
@@ -12,22 +13,36 @@ export default function DataPanel(): JSX.Element {
 				height: "100%",
 			}}
 		>
-			<Typography
-				component="h1"
+			<Paper
 				sx={{
-					marginBottom: "1rem",
-					minHeight: "1rem",
-					textAlign: "center",
-					borderBottom: "1px solid grey",
-					boxShadow: "0 3px 3px #003366",
+					padding: "0.25rem",
+					display: "flex",
+					flexDirection: "column",
+					width: "100%",
 				}}
 			>
-				Data Entry
-			</Typography>
-			<Box sx={{ height: "80%", display: "flex", flex: 1 }}>
-				<DataTable />
-			</Box>
-			<Box sx={{ height: "10%" }}>buttons</Box>
+				<Box
+					sx={{
+						padding: "0.5rem",
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "flex-start",
+					}}
+					gap={2}
+				>
+					<TableChartIcon sx={{ color: "#003366" }} />
+					<Typography
+						component={"h6"}
+						sx={{ fontWeight: "bold" }}
+					>
+						Data Entry
+					</Typography>
+				</Box>
+				<Box sx={{ height: "80%", display: "flex", flex: 1 }}>
+					<DataTable />
+				</Box>
+			</Paper>
+			<Box sx={{ height: "10%" }}>extra inputs (csv, textfield)</Box>
 		</Box>
 	);
 }
