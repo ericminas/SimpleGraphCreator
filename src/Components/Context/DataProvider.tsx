@@ -66,7 +66,7 @@ export default function DataProvider({ children }: { children: ReactNode }): JSX
 	};
 
 	const editData = (updatedEntry: GraphDataPoint): void => {
-		setData((prev) => [...prev.filter((d) => d.id !== updatedEntry.id), updatedEntry]);
+		setData((prev) => prev.map((d) => (d.id === updatedEntry.id ? updatedEntry : d)));
 	};
 
 	const removeData = (dataId: string): void => {

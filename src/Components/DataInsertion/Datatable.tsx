@@ -189,7 +189,7 @@ export default function DataTable(): JSX.Element {
 					<TableBody>
 						{data.map((row, index) => (
 							<DataRow
-								key={row.id}
+								key={`${row.id}-${index}`}
 								row={row}
 								columns={columns}
 								isSelected={isSelected(row.id)}
