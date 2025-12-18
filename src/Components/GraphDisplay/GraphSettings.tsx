@@ -1,5 +1,7 @@
 import {
 	Box,
+	Checkbox,
+	FormControlLabel,
 	Grid,
 	InputLabel,
 	MenuItem,
@@ -16,9 +18,12 @@ import {
 	ExpandMore as ExpandMoreIcon,
 } from "@mui/icons-material";
 import ColorSelector from "./ColorSelector";
+import { useColumnsData } from "../Context/ColumnProvider";
 
 export default function GraphSettings(): JSX.Element {
-	const { settings, setStyle, setTitle, setAxisTitle } = useGraphContext();
+	const { settings, setStyle, setTitle, setAxisTitle, switchUseMultipleColumns } =
+		useGraphContext();
+	const { columns } = useColumnsData();
 	const [collapsed, setCollapsed] = useState<boolean>(false);
 
 	return (
@@ -68,6 +73,7 @@ export default function GraphSettings(): JSX.Element {
 							rowSpacing={2}
 							columnSpacing={2}
 						>
+							{/* Line 1 */}
 							<Grid size={1}>
 								<InputLabel>Graph Style</InputLabel>
 								<Select
@@ -88,6 +94,7 @@ export default function GraphSettings(): JSX.Element {
 									sx={{ width: "100%" }}
 								/>
 							</Grid>
+							{/* Line 2 */}
 							<Grid size={2}>
 								<InputLabel>X-Axis Title</InputLabel>
 								<OutlinedInput
@@ -104,7 +111,21 @@ export default function GraphSettings(): JSX.Element {
 									sx={{ width: "100%" }}
 								/>
 							</Grid>
-							<ColorSelector />
+							{/* Line 3 */}
+							{settings.style !== "pie" && columns.length > 2 && (
+								<Grid size={2}>
+									<FormControlLabel
+										control={<Checkbox checked={settings.useMultipleColumns} />}
+										label="Use multiple value columns"
+										onChange={() => switchUseMultipleColumns()}
+									/>
+								</Grid>
+							)}
+
+							{/* Line 4 */}
+							<Grid size={4}>
+								<ColorSelector />
+							</Grid>
 						</Grid>
 					</Box>
 				)}

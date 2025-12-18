@@ -1,5 +1,4 @@
 import { useEffect, type JSX } from "react";
-
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -9,19 +8,30 @@ import {
 	Title,
 	Tooltip,
 	Legend,
+	Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useRowsData, type GraphDataPoint } from "../../Context/DataProvider";
 import type { AssertionNotification } from "./NotificationList";
 import { useColumnsData, type ColumnDefinition } from "../../Context/ColumnProvider";
-import { useGraphContext } from "../../Context/GraphContextProvider";
+import { useGraphContext, type GraphContextDataType } from "../../Context/GraphContextProvider";
 import { useColorContextData } from "../../Context/ColorContextProvider";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend,
+	Filler
+);
 
 function checkAssertions(
 	rowData: GraphDataPoint[],
-	columns: ColumnDefinition[]
+	columns: ColumnDefinition[],
+	settings: GraphContextDataType
 ): AssertionNotification[] {
 	const values = rowData.map((r) => parseInt(r[columns[1].id]));
 	const notifications: AssertionNotification[] = [];
@@ -36,7 +46,7 @@ function checkAssertions(
 	}
 
 	// WARN: at most 2 cols
-	if (columns.length > 2) {
+	if (!settings.useMultipleColumns && columns.length > 2) {
 		notifications.push({
 			type: "warn",
 			title: "More columns than needed",
@@ -54,27 +64,41 @@ export default function LineChart({
 }): JSX.Element {
 	const { data: rowData } = useRowsData();
 	const { columns } = useColumnsData();
-	const { getOptions } = useGraphContext();
+	const { settings, getOptions } = useGraphContext();
 	const { colors } = useColorContextData();
 
 	// update the assertion notifications
 	useEffect(() => {
-		setAssertionNotifications(checkAssertions(rowData, columns));
-	}, [rowData, columns]);
+		setAssertionNotifications(checkAssertions(rowData, columns, settings));
+	}, [rowData, columns, settings.useMultipleColumns]);
 
-	// const colors = getChartColors(columns.length - 1);
+	// generate the data sets
+	const datasets = [];
+	if (settings.useMultipleColumns) {
+		for (let colIdx = 1; colIdx < columns.length; colIdx++) {
+			datasets.push({
+				label: columns[colIdx].label,
+				data: rowData.map((r) => r[columns[colIdx].id]),
+				backgroundColor: colors.map((c) => c.fill)[colIdx - 1],
+				borderColor: colors.map((c) => c.border)[colIdx - 1],
+				borderWidth: 1,
+				fill: settings.style === "area",
+			});
+		}
+	} else {
+		datasets.push({
+			label: columns[1].label,
+			data: rowData.map((r) => r[columns[1].id]),
+			backgroundColor: colors.map((c) => c.fill)[0],
+			borderColor: colors.map((c) => c.border)[0],
+			borderWidth: 1,
+			fill: settings.style === "area",
+		});
+	}
 
 	const graphData = {
 		labels: rowData.map((r) => r[columns[0].id]),
-		datasets: [
-			{
-				label: columns[1].label,
-				data: rowData.map((r) => r[columns[1].id]),
-				backgroundColor: colors.map((c) => c.fill),
-				borderColor: colors.map((c) => c.border),
-				borderWidth: 1,
-			},
-		],
+		datasets,
 	};
 
 	return (

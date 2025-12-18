@@ -48,6 +48,7 @@ export default function GraphPanel(): JSX.Element {
 				);
 				break;
 			case "line":
+			case "area":
 				setSelectedGraphComponent(
 					<LineChart setAssertionNotifications={setAssertionNotifications} />
 				);

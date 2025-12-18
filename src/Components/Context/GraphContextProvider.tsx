@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type JSX, type ReactNode } from "react";
 
-export const GRAPH_STYLES = ["line", "pie", "bar"] as const;
+export const GRAPH_STYLES = ["line", "area", "pie", "bar"] as const;
 export type GraphStyle = (typeof GRAPH_STYLES)[number];
 
 export interface GraphContextDataType {
@@ -8,6 +8,7 @@ export interface GraphContextDataType {
 	title: string;
 	xAxisTitle: string;
 	yAxisTitle: string;
+	useMultipleColumns: boolean;
 }
 
 export interface GraphContextType {
@@ -15,6 +16,7 @@ export interface GraphContextType {
 	setStyle: (v: GraphStyle) => void;
 	setTitle: (v: string) => void;
 	setAxisTitle: (axis: "x" | "y", v: string) => void;
+	switchUseMultipleColumns: () => void;
 	getOptions: () => unknown; // TODO this should have the type of the option object for the chart package
 }
 
@@ -27,6 +29,7 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 		title: "",
 		xAxisTitle: "",
 		yAxisTitle: "",
+		useMultipleColumns: true,
 	});
 
 	const setStyle = (v: GraphStyle) => {
@@ -39,6 +42,10 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 
 	const setAxisTitle = (axis: string, v: string) => {
 		setSettings((prev) => ({ ...prev, [axis === "x" ? "xAxisTitle" : "yAxisTitle"]: v }));
+	};
+
+	const switchUseMultipleColumns = () => {
+		setSettings((prev) => ({ ...prev, useMultipleColumns: !prev.useMultipleColumns }));
 	};
 
 	const getOptions = () => {
@@ -63,7 +70,9 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 	};
 
 	return (
-		<GraphContext.Provider value={{ settings, setStyle, setTitle, setAxisTitle, getOptions }}>
+		<GraphContext.Provider
+			value={{ settings, setStyle, setTitle, setAxisTitle, switchUseMultipleColumns, getOptions }}
+		>
 			{children}
 		</GraphContext.Provider>
 	);

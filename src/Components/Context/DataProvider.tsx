@@ -27,26 +27,31 @@ export default function DataProvider({ children }: { children: ReactNode }): JSX
 		{
 			label: "Category 1",
 			value: "33",
+			rank: "10",
 			id: uuidv4(),
 		},
 		{
 			label: "Category 2",
 			value: "25",
+			rank: "20",
 			id: uuidv4(),
 		},
 		{
 			label: "Category 3",
 			value: "13",
+			rank: "30",
 			id: uuidv4(),
 		},
 		{
 			label: "Category 4",
 			value: "17",
+			rank: "40",
 			id: uuidv4(),
 		},
 		{
 			label: "Category 5",
 			value: "7",
+			rank: "50",
 			id: uuidv4(),
 		},
 	]);
