@@ -1,13 +1,12 @@
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, type JSX } from "react";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useRowsData, type GraphDataPoint } from "../../Context/DataProvider";
-import { getChartColors } from "./DefaultColors";
 import type { AssertionNotification } from "./NotificationList";
 import { useColumnsData, type ColumnDefinition } from "../../Context/ColumnProvider";
-import NotificationList from "./NotificationList";
 import { useGraphContext } from "../../Context/GraphContextProvider";
+import { useColorContextData } from "../../Context/ColorContextProvider";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -49,23 +48,22 @@ function checkAssertions(
 	return notifications;
 }
 
-export default function DonutChart(): JSX.Element {
+export default function DonutChart({
+	setAssertionNotifications,
+}: {
+	setAssertionNotifications: (v: AssertionNotification[]) => void;
+}): JSX.Element {
 	const { data: rowData } = useRowsData();
 	const { columns } = useColumnsData();
 	const { getOptions } = useGraphContext();
+	const { colors } = useColorContextData();
 
-	const [assertionNotifications, setAssertionNotifications] = useState<AssertionNotification[]>([]);
-
+	// update the assertion notifications
 	useEffect(() => {
 		setAssertionNotifications(checkAssertions(rowData, columns));
 	}, [rowData, columns]);
 
-	// check whether the graph can be rendered
-	if (assertionNotifications.length > 0) {
-		return <NotificationList notifications={assertionNotifications} />;
-	}
-
-	const colors = getChartColors(rowData.length);
+	// const colors = getChartColors(rowData.length);
 
 	const graphData = {
 		labels: rowData.map((r) => r[columns[0].id]),

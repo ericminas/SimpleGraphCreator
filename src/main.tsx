@@ -4,13 +4,16 @@ import App from "./App.tsx";
 import DataProvider from "./Components/Context/DataProvider.tsx";
 import ColumnProvider from "./Components/Context/ColumnProvider.tsx";
 import GraphContextProvider from "./Components/Context/GraphContextProvider.tsx";
+import ColorContextProvider from "./Components/Context/ColorContextProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<GraphContextProvider>
 			<DataProvider>
 				<ColumnProvider>
-					<App />
+					<ColorContextProvider>
+						<App />
+					</ColorContextProvider>
 				</ColumnProvider>
 			</DataProvider>
 		</GraphContextProvider>

@@ -12,14 +12,21 @@ import {
 	Typography,
 	Tooltip,
 	OutlinedInput,
+	ButtonGroup,
+	Button,
 } from "@mui/material";
 import { useState, useRef, type JSX } from "react";
 import { useRowsData } from "../Context/DataProvider";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { useColumnsData } from "../Context/ColumnProvider";
 import DataRow from "./DataRow";
+import {
+	Delete as DeleteIcon,
+	AddCircle as AddCircleIcon,
+	ContentCopy as ContentCopyIcon,
+	ChevronLeft as ChevronLeftIcon,
+	ChevronRight as ChevronRightIcon,
+	Clear as ClearIcon,
+} from "@mui/icons-material";
 
 const additionalColumns = 3;
 
@@ -28,7 +35,7 @@ interface ExtendedHeaderProps {
 	setSelected: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function ExtendedHeader({ selected, setSelected }: ExtendedHeaderProps): JSX.Element {
+function InteractionBar({ selected, setSelected }: ExtendedHeaderProps): JSX.Element {
 	const { data, addData, removeData } = useRowsData();
 	const handleDeleteSelected = () => {
 		selected.forEach((id) => removeData(id));
@@ -79,7 +86,7 @@ function ExtendedHeader({ selected, setSelected }: ExtendedHeaderProps): JSX.Ele
 
 export default function DataTable(): JSX.Element {
 	const { data, addEmptyRow, editData, reorderData } = useRowsData();
-	const { columns, addEmptyColumn, editColumn } = useColumnsData();
+	const { columns, addEmptyColumn, editColumn, removeColumn, shiftColumn } = useColumnsData();
 
 	const [selected, setSelected] = useState<string[]>([]);
 	const dragItem = useRef<number | null>(null);
@@ -125,11 +132,9 @@ export default function DataTable(): JSX.Element {
 	const rowCount = data.length;
 
 	return (
-		<Paper sx={{ width: "100%", overflow: "hidden", display: "flex", flex: 1 }}>
-			<ExtendedHeader
-				selected={selected}
-				setSelected={setSelected}
-			/>
+		<Paper
+			sx={{ width: "100%", overflow: "hidden", display: "flex", flexDirection: "column", flex: 1 }}
+		>
 			<TableContainer sx={{ height: "100%", width: "100%", minWidth: "40rem" }}>
 				<Table
 					stickyHeader
@@ -155,12 +160,28 @@ export default function DataTable(): JSX.Element {
 									sx={{ width: `${(1 / columns.length) * 100}%` }}
 								>
 									<OutlinedInput
+										fullWidth
 										value={column.label}
 										onChange={(e) => editColumn({ id: column.id, label: e.target.value })}
-									></OutlinedInput>
+									/>
+									<ButtonGroup
+										fullWidth
+										variant="outlined"
+										sx={{ width: "100%", marginTop: "0.25rem" }}
+									>
+										<Button onClick={() => shiftColumn(column.id, "l")}>
+											<ChevronLeftIcon />
+										</Button>
+										<Button onClick={() => removeColumn(column.id)}>
+											<ClearIcon />
+										</Button>
+										<Button onClick={() => shiftColumn(column.id, "r")}>
+											<ChevronRightIcon />
+										</Button>
+									</ButtonGroup>
 								</TableCell>
 							))}
-							<TableCell>
+							<TableCell sx={{ cursor: "pointer" }}>
 								<AddCircleIcon onClick={() => addEmptyColumn()} />
 							</TableCell>
 						</TableRow>
@@ -195,6 +216,10 @@ export default function DataTable(): JSX.Element {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<InteractionBar
+				selected={selected}
+				setSelected={setSelected}
+			/>
 		</Paper>
 	);
 }

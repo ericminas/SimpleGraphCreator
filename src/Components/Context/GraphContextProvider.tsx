@@ -50,11 +50,11 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 				legend: { display: settings.style === "pie" },
 			},
 			scales: {
-				y: { title: { text: settings.xAxisTitle, display: settings.xAxisTitle.length > 0 } },
+				y: { title: { text: settings.yAxisTitle, display: settings.yAxisTitle.length > 0 } },
 				x: {
 					title: {
-						test: settings.xAxisTitle,
-						display: settings.yAxisTitle.length > 0,
+						text: settings.xAxisTitle,
+						display: settings.xAxisTitle.length > 0,
 						align: "center",
 					},
 				},

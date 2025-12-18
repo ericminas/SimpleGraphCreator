@@ -12,6 +12,7 @@ export interface ColumnContextType {
 	addEmptyColumn: () => void;
 	editColumn: (entry: ColumnDefinition) => void;
 	removeColumn: (id: string) => void;
+	shiftColumn: (id: string, direction: "l" | "r") => void;
 }
 
 const ColumnContext = createContext<ColumnContextType | undefined>(undefined);
@@ -39,9 +40,19 @@ export default function ColumnProvider({ children }: { children: ReactNode }): J
 		setColumns((prev) => prev.filter((c) => c.id !== id));
 	};
 
+	const shiftColumn = (id: string, direction: "l" | "r"): void => {
+		setColumns((prev) => {
+			const result = Array.from(prev);
+			const elementIdx = result.findIndex((c) => c.id === id);
+			const [removed] = result.splice(elementIdx, 1);
+			result.splice(elementIdx + (direction === "l" ? -1 : 1), 0, removed);
+			return result;
+		});
+	};
+
 	return (
 		<ColumnContext.Provider
-			value={{ columns, addColumn, addEmptyColumn, editColumn, removeColumn }}
+			value={{ columns, addColumn, addEmptyColumn, editColumn, removeColumn, shiftColumn }}
 		>
 			{children}
 		</ColumnContext.Provider>

@@ -15,6 +15,7 @@ import {
 	ExpandLess as ExpandLessIcon,
 	ExpandMore as ExpandMoreIcon,
 } from "@mui/icons-material";
+import ColorSelector from "./ColorSelector";
 
 export default function GraphSettings(): JSX.Element {
 	const { settings, setStyle, setTitle, setAxisTitle } = useGraphContext();
@@ -103,7 +104,7 @@ export default function GraphSettings(): JSX.Element {
 									sx={{ width: "100%" }}
 								/>
 							</Grid>
-							{/* // TODO checkboxes where you can select up to 8 colors out  */}
+							<ColorSelector />
 						</Grid>
 					</Box>
 				)}
