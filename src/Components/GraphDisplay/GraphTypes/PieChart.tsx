@@ -60,7 +60,7 @@ export default function DonutChart({
 
 	// update the assertion notifications
 	useEffect(() => {
-		setAssertionNotifications(checkAssertions(rowData, columns));
+		if (columns.length > 2) setAssertionNotifications(checkAssertions(rowData, columns));
 	}, [rowData, columns]);
 
 	// const colors = getChartColors(rowData.length);
@@ -81,7 +81,7 @@ export default function DonutChart({
 	return (
 		<Pie
 			data={graphData}
-			options={getOptions() as ChartOptions<'pie'>}
+			options={getOptions() as ChartOptions<"pie">}
 		/>
 	);
 }

@@ -11,7 +11,7 @@ export default function DataPanel(): JSX.Element {
 				flexDirection: "column",
 				width: "100%",
 				height: "100%",
-				padding: "0.25rem"
+				padding: "0.25rem",
 			}}
 		>
 			<Paper
@@ -43,7 +43,7 @@ export default function DataPanel(): JSX.Element {
 					<DataTable />
 				</Box>
 			</Paper>
-			<Box sx={{ height: "10%" }}>extra inputs (csv, textfield)</Box>
+			{/* <Box sx={{ height: "10%" }}>extra inputs (csv, textfield)</Box> */}
 		</Box>
 	);
 }

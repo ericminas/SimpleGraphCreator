@@ -144,15 +144,17 @@ export default function DataTable(): JSX.Element {
 						<TableRow>
 							<TableCell padding="normal" />
 							<TableCell padding="checkbox">
-								<Checkbox
-									color="primary"
-									indeterminate={numSelected > 0 && numSelected < rowCount}
-									checked={rowCount > 0 && numSelected === rowCount}
-									onChange={handleSelectAll}
-									inputProps={{
-										"aria-label": "select all rows",
-									}}
-								/>
+								<Tooltip title="Select all rows">
+									<Checkbox
+										color="primary"
+										indeterminate={numSelected > 0 && numSelected < rowCount}
+										checked={rowCount > 0 && numSelected === rowCount}
+										onChange={handleSelectAll}
+										inputProps={{
+											"aria-label": "select all rows",
+										}}
+									/>
+								</Tooltip>
 							</TableCell>
 							{columns.map((column) => (
 								<TableCell
@@ -170,19 +172,27 @@ export default function DataTable(): JSX.Element {
 										sx={{ width: "100%", marginTop: "0.25rem" }}
 									>
 										<Button onClick={() => shiftColumn(column.id, "l")}>
-											<ChevronLeftIcon />
+											<Tooltip title="Move column to the left">
+												<ChevronLeftIcon />
+											</Tooltip>
 										</Button>
 										<Button onClick={() => removeColumn(column.id)}>
-											<ClearIcon />
+											<Tooltip title="Delete column">
+												<ClearIcon />
+											</Tooltip>
 										</Button>
 										<Button onClick={() => shiftColumn(column.id, "r")}>
-											<ChevronRightIcon />
+											<Tooltip title="Move column to the right">
+												<ChevronRightIcon />
+											</Tooltip>
 										</Button>
 									</ButtonGroup>
 								</TableCell>
 							))}
 							<TableCell sx={{ cursor: "pointer" }}>
-								<AddCircleIcon onClick={() => addEmptyColumn()} />
+								<Tooltip title="Add new column">
+									<AddCircleIcon onClick={() => addEmptyColumn()} />
+								</Tooltip>
 							</TableCell>
 						</TableRow>
 					</TableHead>
@@ -210,7 +220,9 @@ export default function DataTable(): JSX.Element {
 									addEmptyRow();
 								}}
 							>
-								<AddCircleIcon />
+								<Tooltip title="Add new row">
+									<AddCircleIcon />
+								</Tooltip>
 							</TableCell>
 						</TableRow>
 					</TableBody>

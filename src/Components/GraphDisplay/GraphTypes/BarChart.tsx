@@ -59,7 +59,7 @@ export default function BarChart({
 
 	// update the assertion notifications
 	useEffect(() => {
-		setAssertionNotifications(checkAssertions(rowData, columns, settings));
+		if (columns.length > 2) setAssertionNotifications(checkAssertions(rowData, columns, settings));
 	}, [rowData, columns, settings.useMultipleColumns]);
 
 	// generate the data sets

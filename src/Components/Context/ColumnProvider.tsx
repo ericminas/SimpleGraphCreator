@@ -20,9 +20,8 @@ export { ColumnContext };
 
 export default function ColumnProvider({ children }: { children: ReactNode }): JSX.Element {
 	const [columns, setColumns] = useState<ColumnDefinition[]>([
-		{ id: "label", label: "label" },
-		{ id: "value", label: "value" },
-		{ id: "rank", label: "rank" },
+		{ id: "label", label: "Label" },
+		{ id: "value", label: "Value" },
 	]);
 
 	const addColumn = (entry: ColumnDefinition): void => {

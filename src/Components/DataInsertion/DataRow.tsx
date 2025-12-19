@@ -1,4 +1,4 @@
-import { Checkbox, TableCell, TableRow } from "@mui/material";
+import { Checkbox, TableCell, TableRow, Tooltip } from "@mui/material";
 import { useState, type JSX } from "react";
 import TableInput from "./TableInput";
 import type { GraphDataPoint } from "../Context/DataProvider";
@@ -60,15 +60,17 @@ export default function DataRow({
 				<DragIndicatorIcon sx={{ color: "action.active", verticalAlign: "middle", mr: 1 }} />
 			</TableCell>
 			<TableCell padding="checkbox">
-				<Checkbox
-					color="primary"
-					checked={isSelected}
-					onChange={() => onSelect(row.id)}
-					onClick={(e) => e.stopPropagation()}
-					inputProps={{
-						"aria-labelledby": row.id,
-					}}
-				/>
+				<Tooltip title="Select row">
+					<Checkbox
+						color="primary"
+						checked={isSelected}
+						onChange={() => onSelect(row.id)}
+						onClick={(e) => e.stopPropagation()}
+						inputProps={{
+							"aria-labelledby": row.id,
+						}}
+					/>
+				</Tooltip>
 			</TableCell>
 			{columns.map((column) => {
 				const value = row[column.id];

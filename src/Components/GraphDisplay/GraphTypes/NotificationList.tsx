@@ -19,7 +19,7 @@ export default function NotificationList({ notifications }: NotificationListProp
 				<Paper
 					key={notification.title}
 					elevation={2}
-					sx={{ paddingX: "0.75rem", paddingY: "0.25rem" }}
+					sx={{ paddingX: "0.75rem", paddingY: "0.25rem", marginY:"0.5rem" }}
 				>
 					<Box
 						sx={{

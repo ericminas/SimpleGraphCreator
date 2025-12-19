@@ -1,4 +1,4 @@
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField, Tooltip } from "@mui/material";
 import type { JSX } from "react";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
@@ -13,7 +13,7 @@ export default function TableInput({
 	id,
 	initalValue,
 	onChange,
-	variant = "standard"
+	variant = "standard",
 }: TableInputProps): JSX.Element {
 	return (
 		<TextField
@@ -30,11 +30,13 @@ export default function TableInput({
 							position="start"
 							sx={{ cursor: "pointer" }}
 						>
-							<RemoveCircleOutlineIcon
-								onClick={() => {
-									onChange("");
-								}}
-							/>
+							<Tooltip title="Delete value">
+								<RemoveCircleOutlineIcon
+									onClick={() => {
+										onChange("");
+									}}
+								/>
+							</Tooltip>
 						</InputAdornment>
 					),
 				},

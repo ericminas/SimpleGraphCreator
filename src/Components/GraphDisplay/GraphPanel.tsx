@@ -21,20 +21,24 @@ export default function GraphPanel(): JSX.Element {
 	// show an error if there are not enough columns
 	useEffect(() => {
 		if (columns.length < 2) {
-			setAssertionNotifications((prev) => [
+			setAssertionNotifications([
 				{
 					type: "error",
 					title: "Not enough columns defined",
 					content:
 						"There must be at least two columns defined. The first one is used for the naming of the data and the second for the displayed data.",
 				},
-				...prev,
 			]);
 		}
 	}, [columns]);
 
 	// set the graph rendering element
 	useEffect(() => {
+		if (columns.length < 2) {
+			setSelectedGraphComponent(<></>);
+			return;
+		}
+
 		setAssertionNotifications([]);
 		switch (settings.style) {
 			case "pie":
