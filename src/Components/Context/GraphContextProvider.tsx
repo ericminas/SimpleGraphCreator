@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, type JSX, type ReactNode } from "react";
-import { useColumnsData } from "./ColumnProvider";
+import type { ChartOptions } from "chart.js";
 
 export const GRAPH_STYLES = ["line", "area", "pie", "bar", "stacked bar"] as const;
 export type GraphStyle = (typeof GRAPH_STYLES)[number];
@@ -20,7 +20,7 @@ export interface GraphContextType {
 	setAxisTitle: (axis: "x" | "y", v: string) => void;
 	switchUseMultipleColumns: () => void;
 	switchShowLegend: () => void;
-	getOptions: () => unknown; // TODO this should have the type of the option object for the chart package
+	getOptions: () => ChartOptions;
 }
 
 const GraphContext = createContext<GraphContextType | undefined>(undefined);
@@ -56,7 +56,7 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 		setSettings((prev) => ({ ...prev, showLegend: !prev.showLegend }));
 	};
 
-	const getOptions = () => {
+	const getOptions = (): ChartOptions => {
 		return {
 			responsive: true,
 

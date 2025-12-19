@@ -9,6 +9,7 @@ import {
 	Tooltip,
 	Legend,
 	Filler,
+	type ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useRowsData, type GraphDataPoint } from "../../Context/DataProvider";
@@ -104,8 +105,7 @@ export default function LineChart({
 	return (
 		<Line
 			data={graphData}
-			//@ts-ignore
-			options={getOptions()}
+			options={getOptions() as ChartOptions<"line">}
 		/>
 	);
 }

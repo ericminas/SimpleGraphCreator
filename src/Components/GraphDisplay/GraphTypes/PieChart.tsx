@@ -1,6 +1,6 @@
 import { useEffect, type JSX } from "react";
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, type ChartOptions } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useRowsData, type GraphDataPoint } from "../../Context/DataProvider";
 import type { AssertionNotification } from "./NotificationList";
@@ -81,8 +81,7 @@ export default function DonutChart({
 	return (
 		<Pie
 			data={graphData}
-			//@ts-ignore
-			options={getOptions()}
+			options={getOptions() as ChartOptions<'pie'>}
 		/>
 	);
 }

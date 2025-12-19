@@ -7,6 +7,7 @@ import {
 	LinearScale,
 	BarElement,
 	Title,
+	type ChartOptions,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useRowsData, type GraphDataPoint } from "../../Context/DataProvider";
@@ -91,8 +92,7 @@ export default function BarChart({
 	return (
 		<Bar
 			data={graphData}
-			//@ts-ignore
-			options={getOptions()}
+			options={getOptions() as ChartOptions<"bar">}
 		/>
 	);
 }
