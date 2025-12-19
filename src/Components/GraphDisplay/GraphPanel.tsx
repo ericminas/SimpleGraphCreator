@@ -43,6 +43,7 @@ export default function GraphPanel(): JSX.Element {
 				);
 				break;
 			case "bar":
+			case "stacked bar":
 				setSelectedGraphComponent(
 					<BarChart setAssertionNotifications={setAssertionNotifications} />
 				);

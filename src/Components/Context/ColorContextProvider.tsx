@@ -58,7 +58,7 @@ export default function ColorContextProvider({ children }: { children: ReactNode
 	const [userSelectedColors, setUserSelectedColors] = useState<number[] | null>(null);
 
 	const maxSelectableColors =
-		columns.length > 2 && settings.style !== "bar" ? columns.length - 1 : 1;
+		columns.length > 2 && settings.style !== "pie" ? columns.length - 1 : 1;
 
 	// create the default selection of colors
 	useEffect(() => {

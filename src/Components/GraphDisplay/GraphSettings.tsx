@@ -21,7 +21,7 @@ import ColorSelector from "./ColorSelector";
 import { useColumnsData } from "../Context/ColumnProvider";
 
 export default function GraphSettings(): JSX.Element {
-	const { settings, setStyle, setTitle, setAxisTitle, switchUseMultipleColumns } =
+	const { settings, setStyle, setTitle, setAxisTitle, switchUseMultipleColumns, switchShowLegend } =
 		useGraphContext();
 	const { columns } = useColumnsData();
 	const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -112,6 +112,13 @@ export default function GraphSettings(): JSX.Element {
 								/>
 							</Grid>
 							{/* Line 3 */}
+							<Grid size={2}>
+								<FormControlLabel
+									control={<Checkbox checked={settings.showLegend} />}
+									label="Show data legend"
+									onChange={() => switchShowLegend()}
+								/>
+							</Grid>
 							{settings.style !== "pie" && columns.length > 2 && (
 								<Grid size={2}>
 									<FormControlLabel

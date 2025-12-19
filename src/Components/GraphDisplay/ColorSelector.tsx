@@ -7,8 +7,6 @@ export default function ColorSelector(): JSX.Element {
 	const { colors, updateColorIndex } = useColorContextData();
 	const baseColors = getChartColors(10);
 
-	// TODO allow multiple select, depending on the chat type (in V2)
-
 	return (
 		<Box
 			sx={{ display: "flex", flexDirection: "row" }}

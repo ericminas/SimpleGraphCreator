@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, type JSX, type ReactNode } from "react";
+import { useColumnsData } from "./ColumnProvider";
 
-export const GRAPH_STYLES = ["line", "area", "pie", "bar"] as const;
+export const GRAPH_STYLES = ["line", "area", "pie", "bar", "stacked bar"] as const;
 export type GraphStyle = (typeof GRAPH_STYLES)[number];
 
 export interface GraphContextDataType {
@@ -9,6 +10,7 @@ export interface GraphContextDataType {
 	xAxisTitle: string;
 	yAxisTitle: string;
 	useMultipleColumns: boolean;
+	showLegend: boolean;
 }
 
 export interface GraphContextType {
@@ -17,6 +19,7 @@ export interface GraphContextType {
 	setTitle: (v: string) => void;
 	setAxisTitle: (axis: "x" | "y", v: string) => void;
 	switchUseMultipleColumns: () => void;
+	switchShowLegend: () => void;
 	getOptions: () => unknown; // TODO this should have the type of the option object for the chart package
 }
 
@@ -30,6 +33,7 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 		xAxisTitle: "",
 		yAxisTitle: "",
 		useMultipleColumns: true,
+		showLegend: true,
 	});
 
 	const setStyle = (v: GraphStyle) => {
@@ -48,22 +52,32 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 		setSettings((prev) => ({ ...prev, useMultipleColumns: !prev.useMultipleColumns }));
 	};
 
+	const switchShowLegend = () => {
+		setSettings((prev) => ({ ...prev, showLegend: !prev.showLegend }));
+	};
+
 	const getOptions = () => {
 		return {
 			responsive: true,
 
 			plugins: {
 				title: { text: settings.title, display: settings.title.length > 0 },
-				legend: { display: settings.style === "pie" },
+				legend: {
+					display: settings.showLegend,
+				},
 			},
 			scales: {
-				y: { title: { text: settings.yAxisTitle, display: settings.yAxisTitle.length > 0 } },
+				y: {
+					title: { text: settings.yAxisTitle, display: settings.yAxisTitle.length > 0 },
+					stacked: settings.style === "stacked bar",
+				},
 				x: {
 					title: {
 						text: settings.xAxisTitle,
 						display: settings.xAxisTitle.length > 0,
 						align: "center",
 					},
+					stacked: settings.style === "stacked bar",
 				},
 			},
 		};
@@ -71,7 +85,15 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 
 	return (
 		<GraphContext.Provider
-			value={{ settings, setStyle, setTitle, setAxisTitle, switchUseMultipleColumns, getOptions }}
+			value={{
+				settings,
+				setStyle,
+				setTitle,
+				setAxisTitle,
+				switchUseMultipleColumns,
+				switchShowLegend,
+				getOptions,
+			}}
 		>
 			{children}
 		</GraphContext.Provider>
