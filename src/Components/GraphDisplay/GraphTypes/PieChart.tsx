@@ -7,6 +7,7 @@ import type { AssertionNotification } from "./NotificationList";
 import { useColumnsData, type ColumnDefinition } from "../../Context/ColumnProvider";
 import { useGraphContext } from "../../Context/GraphContextProvider";
 import { useColorContextData } from "../../Context/ColorContextProvider";
+import { Box } from "@mui/material";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -63,8 +64,6 @@ export default function DonutChart({
 		if (columns.length > 2) setAssertionNotifications(checkAssertions(rowData, columns));
 	}, [rowData, columns]);
 
-	// const colors = getChartColors(rowData.length);
-
 	const graphData = {
 		labels: rowData.map((r) => r[columns[0].id]),
 		datasets: [
@@ -79,9 +78,20 @@ export default function DonutChart({
 	};
 
 	return (
-		<Pie
-			data={graphData}
-			options={getOptions() as ChartOptions<"pie">}
-		/>
+		<Box
+			sx={{
+				width: "200px",
+				height: "200px",
+				// position: "relative",
+				// display: "flex",
+				// alignItems: "center",
+				// justifyContent: "center",
+			}}
+		>
+			<Pie
+				data={graphData}
+				options={getOptions() as ChartOptions<"pie">}
+			/>
+		</Box>
 	);
 }

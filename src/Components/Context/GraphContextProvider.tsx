@@ -59,6 +59,7 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 	const getOptions = (): ChartOptions => {
 		return {
 			responsive: true,
+			maintainAspectRatio: settings.style !== "pie",
 
 			plugins: {
 				title: { text: settings.title, display: settings.title.length > 0 },
@@ -66,20 +67,24 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 					display: settings.showLegend,
 				},
 			},
-			scales: {
-				y: {
-					title: { text: settings.yAxisTitle, display: settings.yAxisTitle.length > 0 },
-					stacked: settings.style === "stacked bar",
-				},
-				x: {
-					title: {
-						text: settings.xAxisTitle,
-						display: settings.xAxisTitle.length > 0,
-						align: "center",
-					},
-					stacked: settings.style === "stacked bar",
-				},
-			},
+
+			scales:
+				settings.style !== "pie"
+					? {
+							y: {
+								title: { text: settings.yAxisTitle, display: settings.yAxisTitle.length > 0 },
+								stacked: settings.style === "stacked bar",
+							},
+							x: {
+								title: {
+									text: settings.xAxisTitle,
+									display: settings.xAxisTitle.length > 0,
+									align: "center",
+								},
+								stacked: settings.style === "stacked bar",
+							},
+					  }
+					: {},
 		};
 	};
 

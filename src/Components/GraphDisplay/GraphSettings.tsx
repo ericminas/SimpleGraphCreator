@@ -95,22 +95,26 @@ export default function GraphSettings(): JSX.Element {
 								/>
 							</Grid>
 							{/* Line 2 */}
-							<Grid size={2}>
-								<InputLabel>X-Axis Title</InputLabel>
-								<OutlinedInput
-									value={settings.xAxisTitle}
-									onChange={(e) => setAxisTitle("x", e.target.value)}
-									sx={{ width: "100%" }}
-								/>
-							</Grid>
-							<Grid size={2}>
-								<InputLabel>Y-Axis Title</InputLabel>
-								<OutlinedInput
-									value={settings.yAxisTitle}
-									onChange={(e) => setAxisTitle("y", e.target.value)}
-									sx={{ width: "100%" }}
-								/>
-							</Grid>
+							{settings.style !== "pie" && (
+								<Grid size={2}>
+									<InputLabel>X-Axis Title</InputLabel>
+									<OutlinedInput
+										value={settings.xAxisTitle}
+										onChange={(e) => setAxisTitle("x", e.target.value)}
+										sx={{ width: "100%" }}
+									/>
+								</Grid>
+							)}
+							{settings.style !== "pie" && (
+								<Grid size={2}>
+									<InputLabel>Y-Axis Title</InputLabel>
+									<OutlinedInput
+										value={settings.yAxisTitle}
+										onChange={(e) => setAxisTitle("y", e.target.value)}
+										sx={{ width: "100%" }}
+									/>
+								</Grid>
+							)}
 							{/* Line 3 */}
 							<Grid size={2}>
 								<FormControlLabel

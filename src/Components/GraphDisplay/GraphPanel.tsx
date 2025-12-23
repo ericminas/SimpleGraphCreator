@@ -43,7 +43,9 @@ export default function GraphPanel(): JSX.Element {
 		switch (settings.style) {
 			case "pie":
 				setSelectedGraphComponent(
-					<DonutChart setAssertionNotifications={setAssertionNotifications} />
+					<Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+						<DonutChart setAssertionNotifications={setAssertionNotifications} />
+					</Box>
 				);
 				break;
 			case "bar":
@@ -73,6 +75,8 @@ export default function GraphPanel(): JSX.Element {
 				flexDirection: "column",
 				width: "100%",
 				height: "100%",
+				overflowY: "scroll",
+				overflowX: "hidden",
 			}}
 		>
 			<GraphSettings />
@@ -107,7 +111,7 @@ export default function GraphPanel(): JSX.Element {
 
 				{!hasErrorNotifications && <div ref={chartContainerRef}>{selectedGraphComponent}</div>}
 			</Paper>
-			<Box>
+			<Box sx={{ paddingY: "0.5rem" }}>
 				<DownloadButton chartReference={chartContainerRef} />
 			</Box>
 		</Box>

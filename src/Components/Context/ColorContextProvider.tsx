@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type JSX, type ReactNode } from "react";
 import { useGraphContext } from "./GraphContextProvider";
 import { useColumnsData } from "./ColumnProvider";
+import { useRowsData } from "./DataProvider";
 
 interface ColorDefinition {
 	fill: string;
@@ -52,13 +53,14 @@ export { ColorContext };
 export default function ColorContextProvider({ children }: { children: ReactNode }): JSX.Element {
 	// other hooks
 	const { columns } = useColumnsData();
+	const { data } = useRowsData();
 	const { settings } = useGraphContext();
 
 	const [colors, setColors] = useState<ColorDefinition[]>([]);
 	const [userSelectedColors, setUserSelectedColors] = useState<number[] | null>(null);
 
 	const maxSelectableColors =
-		columns.length > 2 && settings.style !== "pie" ? columns.length - 1 : 1;
+		settings.style === "pie" ? data.length : columns.length > 2 ? columns.length - 1 : 1;
 
 	// create the default selection of colors
 	useEffect(() => {
@@ -79,7 +81,7 @@ export default function ColorContextProvider({ children }: { children: ReactNode
 			// one color should be selected
 			setColors([chartColors[0]]);
 		}
-	}, [columns, settings.style, userSelectedColors]);
+	}, [columns, data.length, settings.style, userSelectedColors]);
 
 	// update the colors based on the user selected colors
 	useEffect(() => {
