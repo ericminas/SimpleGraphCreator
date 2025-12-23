@@ -13,21 +13,39 @@ export default function App() {
 				boxSizing: "border-box",
 
 				display: "flex",
-				flexDirection: "row",
+				flexDirection: { md: "column", lg: "row" },
 
 				"> *": {
 					boxSizing: "border-box",
 				},
 			}}
 		>
-			<Box sx={{ height: "100%", width: "49%", display: "flex", padding: "0.25rem" }}>
+			<Box
+				sx={{
+					height: { md: "49%", lg: "100%" },
+					width: { md: "100%", lg: "49%" },
+					display: "flex",
+					padding: "0.25rem",
+				}}
+			>
 				<DataPanel />
 			</Box>
 			<Divider
-				orientation="vertical"
-				sx={{ width: "2px", borderColor: "black" }}
+				orientation={{ md: "horizontal", lg: "vertical" }}
+				sx={{
+					width: { md: "100%", lg: "2px" },
+					height: { md: "2px", lg: "auto" },
+					borderColor: "black",
+				}}
 			/>
-			<Box sx={{ height: "100%", width: "49%", display: "flex", padding: "0.25rem" }}>
+			<Box
+				sx={{
+					height: { md: "49%", lg: "100%" },
+					width: { md: "100%", lg: "49%" },
+					display: "flex",
+					padding: "0.25rem",
+				}}
+			>
 				<GraphPanel />
 			</Box>
 		</Box>
