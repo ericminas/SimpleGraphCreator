@@ -1,8 +1,11 @@
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
 import DataPanel from "./Components/DataInsertion/DataPanel";
 import GraphPanel from "./Components/GraphDisplay/GraphPanel";
 
 export default function App() {
+	const theme = useTheme();
+	const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+
 	return (
 		<Box
 			sx={{
@@ -31,7 +34,7 @@ export default function App() {
 				<DataPanel />
 			</Box>
 			<Divider
-				orientation={{ md: "horizontal", lg: "vertical" }}
+				orientation={isLargeScreen ? "vertical" : "horizontal"}
 				sx={{
 					width: { md: "100%", lg: "2px" },
 					height: { md: "2px", lg: "auto" },
