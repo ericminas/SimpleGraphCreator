@@ -2,6 +2,7 @@ import { useEffect, type JSX } from "react";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, type ChartOptions } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useRowsData, type GraphDataPoint } from "../../Context/DataProvider";
 import type { AssertionNotification } from "./NotificationList";
 import { useColumnsData, type ColumnDefinition } from "../../Context/ColumnProvider";
@@ -9,7 +10,7 @@ import { useGraphContext } from "../../Context/GraphContextProvider";
 import { useColorContextData } from "../../Context/ColorContextProvider";
 import { Box } from "@mui/material";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, ChartDataLabels, Tooltip, Legend);
 
 function checkAssertions(
 	rowData: GraphDataPoint[],

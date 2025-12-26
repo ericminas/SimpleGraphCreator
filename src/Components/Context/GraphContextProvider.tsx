@@ -66,6 +66,13 @@ export default function GraphContextProvider({ children }: { children: ReactNode
 				legend: {
 					display: settings.showLegend,
 				},
+				datalabels: {
+					display: true,
+					color: "black",
+					anchor: "center",
+					align: "center",
+					formatter: (value) => ( settings.style==="pie" ? `${value}%`: value), 
+				},
 			},
 
 			scales:

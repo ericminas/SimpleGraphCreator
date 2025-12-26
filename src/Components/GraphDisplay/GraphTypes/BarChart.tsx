@@ -10,13 +10,14 @@ import {
 	type ChartOptions,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import { useRowsData, type GraphDataPoint } from "../../Context/DataProvider";
 import type { AssertionNotification } from "./NotificationList";
 import { useColumnsData, type ColumnDefinition } from "../../Context/ColumnProvider";
 import { useColorContextData } from "../../Context/ColorContextProvider";
 import { useGraphContext, type GraphContextDataType } from "../../Context/GraphContextProvider";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, ChartDataLabels, Title, Tooltip, Legend);
 
 function checkAssertions(
 	rowData: GraphDataPoint[],

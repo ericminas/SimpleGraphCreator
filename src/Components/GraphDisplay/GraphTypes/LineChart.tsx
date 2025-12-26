@@ -17,12 +17,14 @@ import type { AssertionNotification } from "./NotificationList";
 import { useColumnsData, type ColumnDefinition } from "../../Context/ColumnProvider";
 import { useGraphContext, type GraphContextDataType } from "../../Context/GraphContextProvider";
 import { useColorContextData } from "../../Context/ColorContextProvider";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(
 	CategoryScale,
 	LinearScale,
 	PointElement,
 	LineElement,
+	ChartDataLabels,
 	Title,
 	Tooltip,
 	Legend,
