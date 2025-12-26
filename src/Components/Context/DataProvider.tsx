@@ -41,6 +41,11 @@ export default function DataProvider({ children }: { children: ReactNode }): JSX
 	};
 
 	const editData = (updatedEntry: GraphDataPoint): void => {
+		// accept "." and ","
+		for (let key of Object.keys(updatedEntry)) {
+			updatedEntry[key] = updatedEntry[key].replaceAll(",", ".");
+		}
+
 		setData((prev) => prev.map((d) => (d.id === updatedEntry.id ? updatedEntry : d)));
 	};
 
